@@ -295,3 +295,11 @@ footer a { color: white; }
   .tutorial pre { margin-left: -0.2rem; margin-right: -0.2rem; padding: 1rem; }
   .copy-button { position: sticky; float: right; }
 }
+
+.tutorial .expected-result pre,
+.tutorial .expected-result pre code {
+  font-size: 10px !important;
+  font-weight: 300 !important;
+  line-height: 1.4;
+  color: #b8c4c2;
+}
