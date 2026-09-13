@@ -420,7 +420,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># see knitted document version for tutorial example output here</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fst_df_prepared)</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>## Rows: 88,098
 ## Columns: 6
 ## $ chromosome   &lt;chr&gt; "Scaffold_1__1_contigs__length_31190920", "Scaffold_1__1_…
@@ -478,7 +478,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># see knitted document version for tutorial example output here</span></span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pi_df_ratios)</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>## Rows: 93,093
 ## Columns: 9
 ## $ chromosome    &lt;chr&gt; "Scaffold_1__1_contigs__length_31190920", "Scaffold_1__1…
@@ -513,7 +513,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># see knitted document version for tutorial example output here</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pi_fst_df_merge_clean)</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>## Rows: 88,073
 ## Columns: 8
 ## $ chr_pos1_pos2_comp &lt;chr&gt; "1_1_15000_Sal.v.SPW", "1_15001_30000_Sal.v.SPW", "…
@@ -577,7 +577,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>global_outlier_table</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>##           n_non.outliers n_outliers proport_outliers
 ## Sal.v.SPW          14896         98      0.006535948
 ## Sal.v.NCC          17302         48      0.002766571
@@ -626,7 +626,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>individual_outlier_table</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>##           n_non.outliers n_outliers proport_outliers
 ## Sal.v.SPW          14930         64      0.004268374
 ## Sal.v.NCC          17284         66      0.003804035
@@ -740,7 +740,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;outlier_counts_by_comparison.csv&quot;</span>)</span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>## # A tibble: 3 × 3
 ##   comparison n_outliers_population_1 n_outliers_population_2
 ##   &lt;chr&gt;                        &lt;int&gt;                   &lt;int&gt;
@@ -872,7 +872,7 @@ Make sure your directory/file structure matches this expectation.</p>
       <div class="sourceCode" id="cb15"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># meadow_plots[[&quot;Sal.v.SPW&quot;]]$main_points</span></span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected graphical output using tutorial data:</strong>
       <img src="example_meadow_plot_preview.png" alt="Preview of the Sal.v.SPW meadow plot produced by the tutorial data">
       </div>
       </section>
@@ -942,8 +942,8 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
       </section>
       <section id="example-final-meadow-plot" class="level1 final-product">
-      <h1>Example final meadow plot</h1>
-      <p>Using the tutorial data produces the following combined meadow plot:</p>
+      <h1>Final product: publication-ready meadow plots </h1>
+      <p>This example shows the expected result using this tutorial and supplied example data:</p>
       <img src="example_meadow_plot_FINAL.png" alt="Final combined meadow plot produced by the tutorial data">
       </section>
       <section id="group-candidate-outlier-windows-into-peaks"
@@ -1018,7 +1018,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(candidate_peaks)</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>## Rows: 103
 ## Columns: 8
 ## $ comp                               &lt;chr&gt; "Sal.v.SPW", "Sal.v.SPW", "Sal.v.SP…
@@ -1063,7 +1063,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comparison_peak_summary, <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;candidate_peak_summary_by_comparison.csv&quot;</span>))</span>
 <span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(peak_size_summary, <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;candidate_peak_size_counts.csv&quot;</span>))</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected output using tutorial data:</strong>
       <pre><code>## # A tibble: 3 × 5
 ##   comp      n_candidate_peaks n_outlier_windows mean_outlier_windows_per_peak
 ##   &lt;chr&gt;                 &lt;int&gt;             &lt;int&gt;                         &lt;dbl&gt;
@@ -1130,7 +1130,7 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>candidate_peak_size_plot</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong>Expected graphical output using tutorial data:</strong>
       <img src="example_candidate_peak_size_plot_preview.png" alt="Preview of the candidate peak-size plot produced by the tutorial data">
       </div>
       <p>The candidate-peak plot is saved as a transparent PNG in
@@ -1147,20 +1147,18 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
       </section>
       <section id="example-final-candidate-peak-plot" class="level1 final-product">
-      <h1>Example final candidate-peak plot</h1>
-      <p>Using the tutorial data produces the following candidate peak-size plot:</p>
+      <h1>Final product: publication-ready candidate-peak comparison plot </h1>
+      <p>This example shows the expected result using this tutorial and supplied example data:</p>
       <img src="example_candidate_peak_size_plot_FINAL.png" alt="Final candidate peak-size plot produced by the tutorial data">
       </section>
       <section id="reproducibility-information" class="level1">
       <h1>14. Reproducibility information</h1>
       <p><code>sessionInfo()</code> records the R version, operating
-      system, and package versions used to run the tutorial. See the
-      knitted document version for the session information under which
-      this tutorial was built.</p>
+      system, and package versions used to run the tutorial.</p>
       <div class="sourceCode" id="cb24"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
       <div class="expected-result">
-      <strong>Expected tutorial data result:</strong>
+      <strong><code>sessionInfo()</code> used to build tutorial:</strong>
       <pre><code>## R version 4.5.2 (2025-10-31)
 ## Platform: aarch64-apple-darwin20
 ## Running under: macOS Sonoma 14.4.1
