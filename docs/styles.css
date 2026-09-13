@@ -1,0 +1,297 @@
+:root {
+  --ink: #1f2933;
+  --muted: #5f6c78;
+  --paper: #fffdf9;
+  --wash: #f3f7f6;
+  --line: #d9e2e1;
+  --deep-sea: #173f4a;
+  --sea: #2d6b72;
+  --coral: #e44e20;
+  --periwinkle: #545fbd;
+  --code: #17232b;
+  --code-ink: #e8f2f1;
+  --shadow: 0 16px 42px rgba(23, 63, 74, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.68;
+}
+
+a { color: var(--sea); }
+a:hover { color: var(--coral); }
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(146, 208, 80, 0.22), transparent 28%),
+    radial-gradient(circle at 8% 90%, rgba(84, 95, 189, 0.38), transparent 34%),
+    linear-gradient(125deg, #12343e 0%, #235f68 58%, #2d7777 100%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -5rem;
+  bottom: -9rem;
+  width: 30rem;
+  height: 18rem;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 50%;
+  transform: rotate(-10deg);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: 5rem 0 4.5rem;
+}
+
+.eyebrow,
+.sidebar__label {
+  margin: 0 0 0.65rem;
+  color: #cde5df;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 780px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.hero h1 code {
+  padding: 0;
+  color: #d9efb6;
+  background: transparent;
+  font-family: inherit;
+}
+
+.hero__summary {
+  max-width: 760px;
+  margin: 1.35rem 0 0;
+  color: #e4f0ed;
+  font-size: 1.12rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 999px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.button:hover { color: white; transform: translateY(-1px); }
+.button--primary { border-color: var(--coral); background: var(--coral); }
+.button--secondary { background: rgba(255,255,255,0.08); }
+
+.page-shell {
+  display: grid;
+  grid-template-columns: 255px minmax(0, 780px);
+  gap: 4.25rem;
+  width: min(1120px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: 3.5rem 0 6rem;
+}
+
+.sidebar { position: relative; }
+
+.sidebar__card {
+  position: sticky;
+  top: 1.5rem;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  padding: 1.15rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--wash);
+}
+
+.sidebar__label { color: var(--sea); }
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar ul ul {
+  margin: 0.2rem 0 0.45rem 0.85rem;
+  padding-left: 0.7rem;
+  border-left: 1px solid #cbd8d6;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.24rem 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.32;
+  text-decoration: none;
+}
+
+.sidebar a:hover,
+.sidebar a.is-active { color: var(--coral); }
+
+.tutorial { min-width: 0; }
+
+.tutorial > section,
+.tutorial > h1 {
+  scroll-margin-top: 1.5rem;
+}
+
+.tutorial h1,
+.tutorial h2,
+.tutorial h3 {
+  color: var(--deep-sea);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.18;
+}
+
+.tutorial h1 {
+  margin: 4.5rem 0 1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+  font-size: 2.15rem;
+}
+
+.tutorial h1:first-of-type { margin-top: 1.5rem; }
+
+.tutorial h2 {
+  margin: 2.75rem 0 0.85rem;
+  font-size: 1.48rem;
+}
+
+.tutorial h3 { margin-top: 2rem; }
+
+.tutorial code:not(pre code) {
+  padding: 0.12em 0.38em;
+  border-radius: 5px;
+  color: #9d3519;
+  background: #f8ece7;
+  font-size: 0.88em;
+}
+
+.tutorial pre {
+  position: relative;
+  margin: 1.25rem 0 1.8rem;
+  padding: 1.25rem 1.25rem 1.2rem;
+  overflow-x: auto;
+  border: 1px solid #31434d;
+  border-radius: 12px;
+  color: var(--code-ink);
+  background: var(--code);
+  box-shadow: var(--shadow);
+  font-size: 0.83rem;
+  line-height: 1.58;
+  tab-size: 2;
+}
+
+.tutorial pre code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+
+.copy-button {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  padding: 0.38rem 0.65rem;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 7px;
+  color: #eaf4f1;
+  background: rgba(255,255,255,0.10);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.copy-button:hover { background: rgba(255,255,255,0.18); }
+.copy-button.is-copied { border-color: #92d050; color: #ccefaa; }
+
+.callout {
+  margin-bottom: 2rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid #c7dcda;
+  border-left: 5px solid var(--coral);
+  border-radius: 10px;
+  background: #f4f9f8;
+}
+
+.callout strong { color: var(--deep-sea); }
+.callout p { margin: 0.35rem 0 0; }
+
+.tutorial table {
+  width: 100%;
+  margin: 1.4rem 0;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tutorial th,
+.tutorial td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.tutorial th { color: var(--deep-sea); background: var(--wash); }
+
+footer {
+  padding: 1.6rem;
+  color: #dce9e7;
+  background: var(--deep-sea);
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+footer a { color: white; }
+
+@media (max-width: 900px) {
+  .page-shell { grid-template-columns: 1fr; gap: 1.5rem; }
+  .sidebar__card { position: static; max-height: none; }
+  .sidebar ul ul { display: none; }
+  .hero__inner { padding: 4rem 0 3.5rem; }
+}
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .hero__inner,
+  .page-shell { width: min(100% - 1.4rem, 1120px); }
+  .tutorial pre { margin-left: -0.2rem; margin-right: -0.2rem; padding: 1rem; }
+  .copy-button { position: sticky; float: right; }
+}

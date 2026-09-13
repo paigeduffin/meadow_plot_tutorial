@@ -1,0 +1,4 @@
+comp	population_1	population_2	plot_order
+Sal.v.SPW	Salish	B_SPWA	1
+Sal.v.NCC	Salish	E_NCCA	2
+SPW.v.NCC	B_SPWA	E_NCCA	3

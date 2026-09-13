@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A step-by-step tutorial for creating meadow plots and candidate peak summaries from pixy output.">
+  <title>$title$</title>
+  $if(highlighting-css)$
+  <style>$highlighting-css$</style>
+  $endif$
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__inner">
+      <p class="eyebrow">Population genomics · R tutorial</p>
+      <h1>Build meadow plots from <code>pixy</code> output</h1>
+      <p class="hero__summary">Work through the analysis in order, copying each R code block into your own session. The same workflow is also available as an interactive R Markdown document and a command-line script.</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/tutorials/meadow_plot_tutorial.Rmd">Download the Rmd</a>
+        <a class="button button--secondary" href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/scripts/meadow_plot_cli.R">View command-line script</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="sidebar" aria-label="Tutorial contents">
+      <div class="sidebar__card">
+        <p class="sidebar__label">On this page</p>
+        $toc$
+      </div>
+    </aside>
+
+    <main id="main-content" class="tutorial">
+      <div class="callout">
+        <strong>How to use this page</strong>
+        <p>Start at Setup and run the code blocks from top to bottom. Use the Copy button in the upper-right corner of each block, then paste the code into R or RStudio. Text marked “required” identifies the values you must replace for your dataset.</p>
+      </div>
+      $body$
+    </main>
+  </div>
+
+  <footer>
+    <p>Meadow plot tutorial by Paige Duffin · <a href="https://github.com/paigeduffin/meadow_plot_tutorial">View on GitHub</a></p>
+  </footer>
+  <script src="site.js"></script>
+</body>
+</html>
