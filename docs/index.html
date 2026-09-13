@@ -78,7 +78,16 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 }
 
 .expected-result > strong { color: #e44e20; }
-.expected-result pre { margin: 0.8rem 0 0; box-shadow: none; }
+.expected-result pre {
+  margin: 0.8rem 0 0;
+  box-shadow: none;
+  font-size: 0.68rem;
+  font-weight: 400;
+}
+
+.expected-result pre code {
+  font-weight: 400;
+}
 .expected-result img,
 .final-product img {
   display: block;
