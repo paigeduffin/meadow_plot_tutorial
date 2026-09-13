@@ -66,13 +66,37 @@ code span.ss { color: #cc9393; } /* SpecialString */
 code span.st { color: #cc9393; } /* String */
 code span.va { } /* Variable */
 code span.vs { color: #cc9393; } /* VerbatimString */
-code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */</style>
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+.expected-result {
+  margin: 1rem 0 1.8rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #c7dcda;
+  border-left: 5px solid #e44e20;
+  border-radius: 10px;
+  background: #f4f9f8;
+}
+
+.expected-result > strong { color: #e44e20; }
+.expected-result pre { margin: 0.8rem 0 0; box-shadow: none; }
+.expected-result img,
+.final-product img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border: 1px solid #d9e2e1;
+  border-radius: 10px;
+}
+.eyebrow a { color: inherit; }
+.eyebrow a:hover { color: white; }
+</style>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="hero">
     <div class="hero__inner">
-      <p class="eyebrow">Population genomics · R tutorial</p>
+      <p class="eyebrow">Population genomics · R tutorial · created by <a href="https://github.com/paigeduffin">Paige Duffin</a></p>
       <h1>Build meadow plots from <code>pixy</code> output</h1>
       <p class="hero__summary">Work through the analysis in order, copying each R code block into your own session. The same workflow is also available as an interactive R Markdown document and a command-line script.</p>
       <div class="hero__actions">
@@ -107,11 +131,11 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */</style>
         <li><a href="#read-the-pixy-output"
         id="toc-read-the-pixy-output">2. Read the pixy output</a></li>
         <li><a href="#prepare-the-fst-data"
-        id="toc-prepare-the-fst-data">3. Prepare the Fst data</a></li>
+        id="toc-prepare-the-fst-data">3. Prepare the <em>F<sub>ST</sub></em> data</a></li>
         <li><a href="#calculate-π-ratios" id="toc-calculate-π-ratios">4.
         Calculate π ratios</a></li>
         <li><a href="#combine-π-and-fst-datasets"
-        id="toc-combine-π-and-fst-datasets">5. Combine π and Fst
+        id="toc-combine-π-and-fst-datasets">5. Combine π and <em>F<sub>ST</sub></em>
         datasets</a></li>
         <li><a href="#define-candidate-outlier-windows"
         id="toc-define-candidate-outlier-windows">6. Define candidate
@@ -144,6 +168,9 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */</style>
         <li><a href="#combine-and-save-the-plots"
         id="toc-combine-and-save-the-plots">10. Combine and save the
         plots</a></li>
+        <li><a href="#example-final-meadow-plot"
+        id="toc-example-final-meadow-plot">Example final meadow
+        plot</a></li>
         <li><a href="#group-candidate-outlier-windows-into-peaks"
         id="toc-group-candidate-outlier-windows-into-peaks">11. Group
         candidate outlier windows into peaks</a>
@@ -159,6 +186,9 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */</style>
         <li><a href="#plot-candidate-peak-sizes"
         id="toc-plot-candidate-peak-sizes">13. Plot candidate peak
         sizes</a></li>
+        <li><a href="#example-final-candidate-peak-plot"
+        id="toc-example-final-candidate-peak-plot">Example final
+        candidate-peak plot</a></li>
         <li><a href="#reproducibility-information"
         id="toc-reproducibility-information">14. Reproducibility
         information</a></li>
@@ -173,31 +203,31 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */</style>
       </div>
       <section id="overview" class="level1">
       <h1>Overview</h1>
-      <p>This tutorial uses windowed nucleotide diversity (π) and FST
+      <p>This tutorial uses windowed nucleotide diversity (π) and <em>F<sub>ST</sub></em>
       output from <code>pixy</code> to create meadow plots for pairwise
-      population comparisons. Each plot displays windowed FST across
-      chromosomes, with points colored by the log2 π ratio between the
+      population comparisons. Each plot displays windowed <em>F<sub>ST</sub></em> across
+      chromosomes, with points colored by the log<sub>2</sub> π ratio between the
       two populations.</p>
       <p>The workflow:</p>
       <ol type="1">
-      <li>calculates the log2 π ratio for each comparison,</li>
-      <li>combines π ratios with windowed FST estimates,</li>
+      <li>calculates the log<sub>2</sub> π ratio for each comparison,</li>
+      <li>combines π ratios with windowed <em>F<sub>ST</sub></em> estimates,</li>
       <li>identifies candidate outlier windows, and</li>
       <li>creates and stacks the meadow plots.</li>
       </ol>
       <p>Candidate outliers are identified separately for each
-      comparison as windows in the upper 1% of FST and either the lower
-      or upper 1% of the log2 π ratio. Negative FST estimates are
+      comparison as windows in the upper 1% of <em>F<sub>ST</sub></em> and either the lower
+      or upper 1% of the log<sub>2</sub> π ratio. Negative <em>F<sub>ST</sub></em> estimates are
       removed before these thresholds are calculated.</p>
       <p>If π equals zero in either population, the resulting infinite
-      log2 ratio is retained and displayed as an asterisk.</p>
+      log<sub>2</sub> ratio is retained and displayed as an asterisk.</p>
       <section id="expected-files-and-directory-structure"
       class="level2">
       <h2>Expected files and directory structure</h2>
       <p>This tutorial includes four example input files that can be
       used to run the complete workflow:</p>
       <ul>
-      <li><code>example_pixy_fst_data.csv</code>: windowed Fst output
+      <li><code>example_pixy_fst_data.csv</code>: windowed <em>F<sub>ST</sub></em> output
       data containing <code>pop1</code>, <code>pop2</code>,
       <code>chromosome</code>, <code>window_pos_1</code>,
       <code>window_pos_2</code>, and <code>avg_wc_fst</code></li>
@@ -338,7 +368,7 @@ Make sure your directory/file structure matches this expectation.</p>
       </section>
       <section id="read-the-pixy-output" class="level1">
       <h1>2. Read the pixy output</h1>
-      <p>This section imports the windowed Fst and π files and checks
+      <p>This section imports the windowed <em>F<sub>ST</sub></em> and π files and checks
       that they contain the columns required by the remaining analysis.
       If a required column is missing, the tutorial stops and reports
       its name.</p>
@@ -360,8 +390,8 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;The pi file is missing: &quot;</span>,<span class="fu">paste</span>(<span class="fu">setdiff</span>(required_pi_columns, <span class="fu">names</span>(pi_df)), <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>))}</span></code></pre></div>
       </section>
       <section id="prepare-the-fst-data" class="level1">
-      <h1>3. Prepare the Fst data</h1>
-      <p>This section matches the Fst data to the chromosome and
+      <h1>3. Prepare the <em>F<sub>ST</sub></em> data</h1>
+      <p>This section matches the <em>F<sub>ST</sub></em> data to the chromosome and
       comparison maps. A standardized population-pair key is created by
       alphabetizing each pair, allowing comparisons to be matched
       regardless of whether a population appears in the
@@ -369,7 +399,7 @@ Make sure your directory/file structure matches this expectation.</p>
       output.</p>
       <p>Chromosomes not included in the chromosome map are removed, and
       <code>chromo.num</code> is added for chromosome labeling and plot
-      order. The final check confirms that Fst data were found for every
+      order. The final check confirms that <em>F<sub>ST</sub></em> data were found for every
       requested comparison.</p>
       <div class="sourceCode" id="cb5"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pair_key <span class="ot">&lt;-</span> <span class="cf">function</span>(pop_a, pop_b) {<span class="fu">paste</span>(<span class="fu">pmin</span>(pop_a, pop_b), <span class="fu">pmax</span>(pop_a, pop_b), <span class="at">sep =</span> <span class="st">&quot;__&quot;</span>)}</span>
@@ -389,6 +419,17 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># check to make sure this df looks good so far</span></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># see knitted document version for tutorial example output here</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fst_df_prepared)</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## Rows: 88,098
+## Columns: 6
+## $ chromosome   &lt;chr&gt; "Scaffold_1__1_contigs__length_31190920", "Scaffold_1__1_…
+## $ chromo.num   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ window_pos_1 &lt;dbl&gt; 1, 1, 1, 15001, 15001, 15001, 30001, 30001, 30001, 45001,…
+## $ window_pos_2 &lt;dbl&gt; 15000, 15000, 15000, 30000, 30000, 30000, 45000, 45000, 4…
+## $ comp         &lt;chr&gt; "Sal.v.SPW", "Sal.v.NCC", "SPW.v.NCC", "SPW.v.NCC", "Sal.…
+## $ avg_wc_fst   &lt;dbl&gt; -0.055080978, 0.003552592, -0.006504588, 0.005248591, -0.…</code></pre>
+      </div>
       </section>
       <section id="calculate-π-ratios" class="level1">
       <h1>4. Calculate π ratios</h1>
@@ -398,7 +439,7 @@ Make sure your directory/file structure matches this expectation.</p>
       dataset.</p>
       <p>For each comparison, the π ratio is calculated as
       <code>population_1 / population_2</code> and then
-      log2-transformed. The chromosome map is joined to the resulting
+      log<sub>2</sub>-transformed. The chromosome map is joined to the resulting
       table, and chromosomes without a matching <code>chromo.num</code>
       value are removed.</p>
       <div class="sourceCode" id="cb6"><pre
@@ -436,15 +477,29 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># check to make sure this df looks good so far </span></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># see knitted document version for tutorial example output here</span></span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pi_df_ratios)</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## Rows: 93,093
+## Columns: 9
+## $ chromosome    &lt;chr&gt; "Scaffold_1__1_contigs__length_31190920", "Scaffold_1__1…
+## $ window_pos_1  &lt;dbl&gt; 1, 15001, 30001, 45001, 60001, 75001, 90001, 105001, 120…
+## $ window_pos_2  &lt;dbl&gt; 15000, 30000, 45000, 60000, 75000, 90000, 105000, 120000…
+## $ comp          &lt;chr&gt; "Sal.v.SPW", "Sal.v.SPW", "Sal.v.SPW", "Sal.v.SPW", "Sal…
+## $ population_1  &lt;chr&gt; "Salish", "Salish", "Salish", "Salish", "Salish", "Salis…
+## $ population_2  &lt;chr&gt; "B_SPWA", "B_SPWA", "B_SPWA", "B_SPWA", "B_SPWA", "B_SPW…
+## $ pi_ratio      &lt;dbl&gt; 0.9433711, 1.0624062, 0.9246540, 1.0298930, 1.0143787, 0…
+## $ chromo.num    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ log2_pi.ratio &lt;dbl&gt; -0.08410271, 0.08733549, -0.11301442, 0.04249444, 0.0205…</code></pre>
+      </div>
       </section>
       <section id="combine-π-and-fst-datasets" class="level1">
-      <h1>5. Combine π and Fst datasets</h1>
-      <p>The π-ratio and Fst datasets are joined by chromosome, window
+      <h1>5. Combine π and <em>F<sub>ST</sub></em> datasets</h1>
+      <p>The π-ratio and <em>F<sub>ST</sub></em> datasets are joined by chromosome, window
       coordinates, and comparison so that both statistics are aligned
       for the same genomic windows. Only windows present in both
       datasets are retained.</p>
-      <p>Rows with missing Fst or log2 π-ratio values are removed, while
-      infinite log2 π ratios are retained for later plotting. A unique
+      <p>Rows with missing <em>F<sub>ST</sub></em> or log<sub>2</sub> π-ratio values are removed, while
+      infinite log<sub>2</sub> π ratios are retained for later plotting. A unique
       identifier is also created for each window and comparison.</p>
       <div class="sourceCode" id="cb7"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pi_fst_df_merge_clean <span class="ot">&lt;-</span> pi_df_ratios <span class="sc">%&gt;%</span></span>
@@ -457,6 +512,19 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># check to make sure this df looks good so far</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># see knitted document version for tutorial example output here</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pi_fst_df_merge_clean)</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## Rows: 88,073
+## Columns: 8
+## $ chr_pos1_pos2_comp &lt;chr&gt; "1_1_15000_Sal.v.SPW", "1_15001_30000_Sal.v.SPW", "…
+## $ chromo.num         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ window_pos_1       &lt;dbl&gt; 1, 15001, 30001, 45001, 60001, 75001, 90001, 105001…
+## $ window_pos_2       &lt;dbl&gt; 15000, 30000, 45000, 60000, 75000, 90000, 105000, 1…
+## $ comp               &lt;chr&gt; "Sal.v.SPW", "Sal.v.SPW", "Sal.v.SPW", "Sal.v.SPW",…
+## $ avg_wc_fst         &lt;dbl&gt; -0.055080978, -0.012930189, -0.013281273, -0.022486…
+## $ pi_ratio           &lt;dbl&gt; 0.9433711, 1.0624062, 0.9246540, 1.0298930, 1.01437…
+## $ log2_pi.ratio      &lt;dbl&gt; -0.08410271, 0.08733549, -0.11301442, 0.04249444, 0…</code></pre>
+      </div>
       </section>
       <section id="define-candidate-outlier-windows" class="level1">
       <h1>6. Define candidate outlier windows</h1>
@@ -464,9 +532,9 @@ Make sure your directory/file structure matches this expectation.</p>
       <h2>Global thresholds</h2>
       <p>Global thresholds are calculated by pooling windows across all
       pairwise comparisons. Before calculating these thresholds,
-      negative Fst estimates are removed.</p>
-      <p>Candidate outliers must fall within the upper 1% of Fst values
-      and either the lower or upper 1% of log2 π ratios. Infinite log2 π
+      negative <em>F<sub>ST</sub></em> estimates are removed.</p>
+      <p>Candidate outliers must fall within the upper 1% of <em>F<sub>ST</sub></em> values
+      and either the lower or upper 1% of log<sub>2</sub> π ratios. Infinite log<sub>2</sub> π
       ratios are excluded when estimating the percentile thresholds but
       are retained when windows are classified. The resulting table
       summarizes the number and proportion of global outliers within
@@ -508,16 +576,23 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="st">&quot;comp&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>global_outlier_table</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>##           n_non.outliers n_outliers proport_outliers
+## Sal.v.SPW          14896         98      0.006535948
+## Sal.v.NCC          17302         48      0.002766571
+## SPW.v.NCC          12409         20      0.001609140</code></pre>
+      </div>
       </section>
       <section id="comparison-specific-thresholds" class="level2">
       <h2>Comparison-specific thresholds</h2>
       <p>This section calculates separate thresholds for each pairwise
       comparison, allowing the outlier definition to reflect the
       distribution of values within that comparison.</p>
-      <p>Windows are classified as candidate outliers when their Fst is
-      at or above the comparison-specific 99th percentile and their log2
+      <p>Windows are classified as candidate outliers when their <em>F<sub>ST</sub></em> is
+      at or above the comparison-specific 99th percentile and their log<sub>2</sub>
       π ratio is at or below the 1st percentile or at or above the 99th
-      percentile. Infinite log2 π ratios are excluded when estimating
+      percentile. Infinite log<sub>2</sub> π ratios are excluded when estimating
       the percentile thresholds but retained during classification. The
       final table summarizes the number and proportion of candidate
       outlier windows for each comparison.</p>
@@ -550,12 +625,19 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="st">&quot;comp&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>individual_outlier_table</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>##           n_non.outliers n_outliers proport_outliers
+## Sal.v.SPW          14930         64      0.004268374
+## Sal.v.NCC          17284         66      0.003804035
+## SPW.v.NCC          12388         41      0.003298737</code></pre>
+      </div>
       </section>
       </section>
       <section id="label-windows-with-infinite-pi-ratios"
       class="level1">
       <h1>7. Label windows with infinite pi ratios</h1>
-      <p>When π is zero in <code>population_1</code>, the log2 π ratio
+      <p>When π is zero in <code>population_1</code>, the log<sub>2</sub> π ratio
       is <code>-Inf</code>. When π is zero in <code>population_2</code>,
       the ratio is <code>Inf</code>. These values are biologically
       informative and are retained rather than discarded.</p>
@@ -612,7 +694,7 @@ Make sure your directory/file structure matches this expectation.</p>
       contains the merged data, comparison-specific thresholds, and
       outlier classifications. The second adds the variables used to
       create the meadow plots. The third provides a list of windows with
-      infinite log2 π ratios.</p>
+      infinite log<sub>2</sub> π ratios.</p>
       <p>All files are written to the folder specified by
       <code>wrangled_dir</code>.</p>
       <div class="sourceCode" id="cb11"><pre
@@ -627,7 +709,7 @@ Make sure your directory/file structure matches this expectation.</p>
       <section id="summarize-outliers-by-population" class="level1">
       <h1>8. Summarize outliers by population</h1>
       <p>This section assigns each candidate outlier to the population
-      with lower π. A negative log2 π ratio indicates lower π in
+      with lower π. A negative log<sub>2</sub> π ratio indicates lower π in
       <code>population_1</code>, while a positive value indicates lower
       π in <code>population_2</code>. The same rule correctly assigns
       negative and positive infinite ratios.</p>
@@ -657,13 +739,22 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  outlier_counts,</span>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;outlier_counts_by_comparison.csv&quot;</span>)</span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## # A tibble: 3 × 3
+##   comparison n_outliers_population_1 n_outliers_population_2
+##   &lt;chr&gt;                        &lt;int&gt;                   &lt;int&gt;
+## 1 SPW.v.NCC                       10                      31
+## 2 Sal.v.NCC                       50                      16
+## 3 Sal.v.SPW                       47                      17</code></pre>
+      </div>
       </section>
       <section id="create-meadow-plots" class="level1">
       <h1>9. Create meadow plots</h1>
       <section id="color-scale" class="level2">
       <h2>Color scale</h2>
       <p>This function creates a separate π-ratio color scale for each
-      comparison. The scale spans the finite log2 π-ratio values present
+      comparison. The scale spans the finite log<sub>2</sub> π-ratio values present
       in that comparison and is centered at zero, where both populations
       have equal π. Negative values indicate lower π in
       <code>population_1</code>, while positive values indicate lower π
@@ -706,8 +797,8 @@ Make sure your directory/file structure matches this expectation.</p>
       </section>
       <section id="plot-function" class="level2">
       <h2>Plot function</h2>
-      <p>This function builds one meadow plot for each comparison. Fst
-      is plotted across chromosomes, with finite log2 π ratios shown
+      <p>This function builds one meadow plot for each comparison. <em>F<sub>ST</sub></em>
+      is plotted across chromosomes, with finite log<sub>2</sub> π ratios shown
       using the comparison-specific color scale and infinite values
       shown as colored asterisks. Candidate outliers are displayed as
       larger, fully opaque points.</p>
@@ -780,6 +871,10 @@ Make sure your directory/file structure matches this expectation.</p>
       map.</p>
       <div class="sourceCode" id="cb15"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># meadow_plots[[&quot;Sal.v.SPW&quot;]]$main_points</span></span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <img src="example_meadow_plot_preview.png" alt="Preview of the Sal.v.SPW meadow plot produced by the tutorial data">
+      </div>
       </section>
       </section>
       <section id="combine-and-save-the-plots" class="level1">
@@ -846,6 +941,11 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">&quot;transparent&quot;</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
       </section>
+      <section id="example-final-meadow-plot" class="level1 final-product">
+      <h1>Example final meadow plot</h1>
+      <p>Using the tutorial data produces the following combined meadow plot:</p>
+      <img src="example_meadow_plot_FINAL.png" alt="Final combined meadow plot produced by the tutorial data">
+      </section>
       <section id="group-candidate-outlier-windows-into-peaks"
       class="level1">
       <h1>11. Group candidate outlier windows into peaks</h1>
@@ -857,7 +957,7 @@ Make sure your directory/file structure matches this expectation.</p>
       remain in the same peak when they were separated by no more than
       three retained non-outlier windows. That value can be changed
       below. Windows removed earlier because of missing data or negative
-      Fst are not counted as intervening non-outlier windows.</p>
+      <em>F<sub>ST</sub></em> are not counted as intervening non-outlier windows.</p>
       <div class="sourceCode" id="cb18"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>max_intervening_nonoutliers <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -917,6 +1017,19 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(candidate_peaks)</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## Rows: 103
+## Columns: 8
+## $ comp                               &lt;chr&gt; "Sal.v.SPW", "Sal.v.SPW", "Sal.v.SP…
+## $ chromo.num                         &lt;dbl&gt; 1, 1, 1, 2, 3, 3, 4, 5, 6, 6, 6, 6,…
+## $ peak_number                        &lt;int&gt; 1, 2, 3, 1, 1, 2, 1, 1, 1, 2, 3, 4,…
+## $ first_window_start                 &lt;dbl&gt; 14355001, 16560001, 23070001, 21495…
+## $ last_window_end                    &lt;dbl&gt; 14370000, 16575000, 23085000, 21510…
+## $ n_outlier_windows                  &lt;int&gt; 1, 1, 1, 1, 2, 1, 13, 1, 2, 3, 1, 1…
+## $ n_intervening_retained_nonoutliers &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0,…
+## $ total_genomic_span_kb              &lt;dbl&gt; 15, 15, 15, 15, 30, 15, 240, 15, 30…</code></pre>
+      </div>
       </section>
       </section>
       <section id="summarize-and-save-candidate-peaks" class="level1">
@@ -931,11 +1044,12 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(comp) <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_candidate_peaks =</span> <span class="fu">n</span>(),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_outlier_windows =</span> <span class="fu">sum</span>(n_outlier_windows),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_outlier_windows_per_peak =</span> <span class="fu">mean</span>(n_outlier_windows),</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_outlier_windows_per_peak =</span> <span class="fu">max</span>(n_outlier_windows),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_outlier_windows_per_peak =</span> <span class="fu">mean</span>(n_outlier_windows),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_outlier_windows_per_peak =</span> <span class="fu">max</span>(n_outlier_windows),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_outlier_windows =</span> <span class="fu">sum</span>(n_outlier_windows),</span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb21-9a"><a href="#cb21-9a" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(n_outlier_windows, <span class="at">.after =</span> n_candidate_peaks) <span class="sc">%&gt;%</span></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">match</span>(comp, plot_order))</span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>peak_size_summary <span class="ot">&lt;-</span> candidate_peaks <span class="sc">%&gt;%</span></span>
@@ -948,6 +1062,34 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(candidate_peaks, <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;candidate_peaks.csv&quot;</span>))</span>
 <span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comparison_peak_summary, <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;candidate_peak_summary_by_comparison.csv&quot;</span>))</span>
 <span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(peak_size_summary, <span class="fu">file.path</span>(wrangled_dir, <span class="st">&quot;candidate_peak_size_counts.csv&quot;</span>))</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## # A tibble: 3 × 5
+##   comp      n_candidate_peaks n_outlier_windows mean_outlier_windows_per_peak
+##   &lt;chr&gt;                 &lt;int&gt;             &lt;int&gt;                         &lt;dbl&gt;
+## 1 Sal.v.SPW                33                64                          1.94
+## 2 Sal.v.NCC                32                66                          2.06
+## 3 SPW.v.NCC                38                41                          1.08
+## # ℹ 1 more variable: max_outlier_windows_per_peak &lt;int&gt;
+
+## # A tibble: 14 × 3
+##    comp      n_outlier_windows n_candidate_peaks
+##    &lt;chr&gt;                 &lt;int&gt;             &lt;int&gt;
+##  1 Sal.v.SPW                 1                25
+##  2 Sal.v.SPW                 2                 2
+##  3 Sal.v.SPW                 3                 3
+##  4 Sal.v.SPW                 6                 1
+##  5 Sal.v.SPW                 7                 1
+##  6 Sal.v.SPW                13                 1
+##  7 Sal.v.NCC                 1                25
+##  8 Sal.v.NCC                 2                 1
+##  9 Sal.v.NCC                 3                 3
+## 10 Sal.v.NCC                 5                 1
+## 11 Sal.v.NCC                11                 1
+## 12 Sal.v.NCC                14                 1
+## 13 SPW.v.NCC                 1                35
+## 14 SPW.v.NCC                 2                 3</code></pre>
+      </div>
       </section>
       <section id="plot-candidate-peak-sizes" class="level1">
       <h1>13. Plot candidate peak sizes</h1>
@@ -987,6 +1129,10 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>))</span>
 <span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>candidate_peak_size_plot</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <img src="example_candidate_peak_size_plot_preview.png" alt="Preview of the candidate peak-size plot produced by the tutorial data">
+      </div>
       <p>The candidate-peak plot is saved as a transparent PNG in
       <code>plot_dir</code>. Its filename, dimensions, resolution, and
       background can be adjusted below.</p>
@@ -1000,6 +1146,11 @@ Make sure your directory/file structure matches this expectation.</p>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">&quot;transparent&quot;</span></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
       </section>
+      <section id="example-final-candidate-peak-plot" class="level1 final-product">
+      <h1>Example final candidate-peak plot</h1>
+      <p>Using the tutorial data produces the following candidate peak-size plot:</p>
+      <img src="example_candidate_peak_size_plot_FINAL.png" alt="Final candidate peak-size plot produced by the tutorial data">
+      </section>
       <section id="reproducibility-information" class="level1">
       <h1>14. Reproducibility information</h1>
       <p><code>sessionInfo()</code> records the R version, operating
@@ -1008,6 +1159,32 @@ Make sure your directory/file structure matches this expectation.</p>
       this tutorial was built.</p>
       <div class="sourceCode" id="cb24"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+      <div class="expected-result">
+      <strong>Expected tutorial data result:</strong>
+      <pre><code>## R version 4.5.2 (2025-10-31)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Sonoma 14.4.1
+##
+## Matrix products: default
+## BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib; LAPACK version 3.12.1
+##
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+##
+## time zone: America/Los_Angeles
+## tzcode source: internal
+##
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base
+##
+## other attached packages:
+## [1] ggtext_0.1.2  gridExtra_2.3 tibble_3.3.1  ggplot2_4.0.3 readr_2.2.0
+## [6] tidyr_1.3.2   dplyr_1.2.1
+##
+## loaded via a namespace (and not attached):
+##  [1] sass_0.4.10        utf8_1.2.6         generics_0.1.4</code></pre>
+      </div>
       </section>
     </main>
   </div>
