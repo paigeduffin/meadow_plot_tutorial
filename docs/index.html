@@ -220,20 +220,24 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */</style>
       ├── example_pixy_pi_data.csv
       ├── example_comparison_map.txt
       └── example_chromosome_map.txt</code></pre>
-      <p>Users should first run the tutorial with the example files and
-      then replace them with files for their own dataset. The
+      <p>My suggestion is that you first run the tutorial with the 
+      example files and then replace them with your own dataset. The
       replacement files may have different names, but they must retain
       the expected column structure described below. Their paths are
       specified in the <code>file-paths</code> chunk.</p>
       </section>
       <section id="required-user-modifications" class="level2">
       <h2>Required user modifications</h2>
-      <p>Two code chunks must be updated for a new dataset:</p>
-      <p>(required) <code>file-paths</code>: replace the example paths
-      with the full paths to your input files and desired output
-      folders. (optional) <code>example-plot</code>: uncomment the
-      provided line of code and replace “Sal.v.SPW” with a comparison
-      name from the comp column of your comparison map.</p>
+      <p>One code chunk must be updated for a new dataset, the other is optional:</p>
+<p>
+<strong style="display:block; color:#e44e20;">Required</strong>
+<code>file-paths</code>: replace the example paths with the full paths to your input files and desired output folders.
+</p>
+
+<p>
+<strong style="display:block; color:#e44e20;">Optional</strong>
+<code>example-plot</code>: uncomment the provided line of code and replace “Sal.v.SPW” with a comparison name from the <code>comp</code> column of your comparison map.
+</p>
       <p>Additional aesthetic choices (e.g., plotting colors, point
       sizes, text sizes, and output dimensions) can also be modified
       throughout the document, but these changes are optional.</p>
