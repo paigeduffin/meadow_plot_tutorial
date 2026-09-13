@@ -778,11 +778,12 @@ comparison_peak_summary <- candidate_peaks %>%
   group_by(comp) %>%
   summarise(
     n_candidate_peaks = n(),
-    n_outlier_windows = sum(n_outlier_windows),
     mean_outlier_windows_per_peak = mean(n_outlier_windows),
     max_outlier_windows_per_peak = max(n_outlier_windows),
+    n_outlier_windows = sum(n_outlier_windows),
     .groups = "drop"
   ) %>%
+  relocate(n_outlier_windows, .after = n_candidate_peaks) %>%
   arrange(match(comp, plot_order))
 
 peak_size_summary <- candidate_peaks %>%
