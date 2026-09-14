@@ -146,7 +146,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
         <li><a href="#calculate-π-ratios" id="toc-calculate-π-ratios">4.
         Calculate π ratios</a></li>
         <li><a href="#combine-π-and-fst-datasets"
-        id="toc-combine-π-and-fst-datasets">5. Combine π and <em>F<sub>ST</sub></em>
+        id="toc-combine-π-and-fst-datasets">5. Combine π &amp; <em>F<sub>ST</sub></em>
         datasets</a></li>
         <li><a href="#define-candidate-outlier-windows"
         id="toc-define-candidate-outlier-windows">6. Define candidate
@@ -177,7 +177,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
         function</a></li>
         </ul></li>
         <li><a href="#combine-and-save-the-plots"
-        id="toc-combine-and-save-the-plots">10. Combine and save the
+        id="toc-combine-and-save-the-plots">10. Combine &amp; save the
         plots</a></li>
         <li><a href="#example-final-meadow-plot"
         id="toc-example-final-meadow-plot">   Example final meadow
@@ -192,7 +192,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
         id="toc-define-candidate-peaks">Define candidate peaks</a></li>
         </ul></li>
         <li><a href="#summarize-and-save-candidate-peaks"
-        id="toc-summarize-and-save-candidate-peaks">12. Summarize and
+        id="toc-summarize-and-save-candidate-peaks">12. Summarize &amp;
         save candidate peaks</a></li>
         <li><a href="#plot-candidate-peak-sizes"
         id="toc-plot-candidate-peak-sizes">13. Plot candidate peak
@@ -201,8 +201,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
         id="toc-example-final-candidate-peak-plot">   Example final
         candidate-peak plot</a></li>
         <li><a href="#reproducibility-information"
-        id="toc-reproducibility-information">14. Reproducibility
-        information</a></li>
+        id="toc-reproducibility-information">14. References &amp; reproducibility info</a></li>
         </ul>
       </div>
     </aside>
@@ -403,9 +402,9 @@ Make sure your directory/file structure matches this expectation.</p>
       <code>read_csv()</code>. If your pixy output is tab-separated,
       replace <code>read_csv()</code> with <code>read_tsv()</code> for
       both files.</p>
-      <p>Template pixy script available here: <li><a class="example-file-button"
+      <p>Template pixy script available here: <a class="example-file-button"
    href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/input/example_pixy_script.sh">
-  example_pixy_script.sh</a>.</p>
+  example_pixy_script.sh</a></p>
       <div class="sourceCode" id="cb4"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fst_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fst_file, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pi_df  <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(pi_file, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
@@ -1182,8 +1181,12 @@ Make sure your directory/file structure matches this expectation.</p>
       <img src="example_candidate_peak_size_plot_FINAL.png" alt="Final candidate peak-size plot produced by the tutorial data">
       </section>
       <section id="reproducibility-information" class="level1">
-      <h1>14. Reproducibility information</h1>
-      <p><code>sessionInfo()</code> records the R version, operating
+      <h1>14. References & reproducibility info</h1>
+      <h2>References</h2>
+      <li>Ref 1</li>
+      <li>Ref 2</li>
+        <h2>Reproducibility</h2>
+        <p><code>sessionInfo()</code> records the R version, operating
       system, and package versions used to run the tutorial.</p>
       <div class="sourceCode" id="cb24"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
