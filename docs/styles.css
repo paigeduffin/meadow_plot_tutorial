@@ -331,3 +331,16 @@ footer a { color: white; }
   color: #e44e20;
   overflow-wrap: anywhere;
 }
+
+.citation-box {
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  background: #f7f3ef;
+  border-left: 4px solid #e44e20;
+  line-height: 1.6;
+}
+
+.citation-box a {
+  color: #e44e20;
+  overflow-wrap: anywhere;
+}
