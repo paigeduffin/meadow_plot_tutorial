@@ -111,7 +111,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
       <div class="hero__actions">
   <a class="button button--primary" href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/tutorials/meadow_plot_tutorial.Rmd">R Markdown version</a>
   <a class="button button--primary" href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/scripts/meadow_plot_cli.R">Command-line version</a>
-  <a class="button button--secondary" href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/scripts/example_pixy_script.sh">Example pixy script</a>
+  <a class="button button--secondary" href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/input/example_pixy_script.sh">Example pixy script</a>
       </div>
         
     </div>
@@ -403,6 +403,9 @@ Make sure your directory/file structure matches this expectation.</p>
       <code>read_csv()</code>. If your pixy output is tab-separated,
       replace <code>read_csv()</code> with <code>read_tsv()</code> for
       both files.</p>
+      <p>Template pixy script available here: <li><a class="example-file-button"
+   href="https://github.com/paigeduffin/meadow_plot_tutorial/blob/main/input/example_pixy_script.sh">
+  example_pixy_script.sh</a>.</p>
       <div class="sourceCode" id="cb4"><pre
       class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fst_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fst_file, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pi_df  <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(pi_file, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
