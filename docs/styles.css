@@ -316,3 +316,18 @@ footer a { color: white; }
   background-color: #c93d16;
   text-decoration: none;
 }
+
+.reference-list {
+  padding-left: 1.5rem;
+}
+
+.reference-list li {
+  margin-bottom: 1.25rem;
+  padding-left: 0.35rem;
+  line-height: 1.6;
+}
+
+.reference-list a {
+  color: #e44e20;
+  overflow-wrap: anywhere;
+}
