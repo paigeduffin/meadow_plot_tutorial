@@ -10,9 +10,20 @@
 #SBATCH --output=pixy_windowed_pi_fst.%j.out
 #SBATCH --error=pixy_windowed_pi_fst.%j.err
 
+# This template was written by Paige Duffin (2026) to accompany the meadow 
+# plot tutorial available at: https://paigeduffin.github.io/meadow_plot_tutorial
+# 
+# this template uses pixy, a valuable tool external to the tutorial: 
+# Korunes, K. L. & Samuk, K. pixy: Unbiased estimation of nucleotide diversity 
+# and divergence in the presence of missing data. Mol. Ecol. Resour. 21, 
+# 1359–1368 (2021). https://doi.org/10.1111/1755-0998.13326
+#
 # This template calculates windowed nucleotide diversity (pi) and Fst with pixy.
 # Lines that must be reviewed or edited by the user are marked with "EDITME".
 # Slurm log files are written to the directory from which this script is submitted.
+
+# See pixy documentation for important additional info needed to run the program 
+# at: https://pixy.readthedocs.io/en/latest/index.html
 
 ###############################################################################
 # Preparing the sites and windows files
