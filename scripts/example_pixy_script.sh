@@ -13,7 +13,7 @@
 # This template was written by Paige Duffin (2026) to accompany the meadow 
 # plot tutorial available at: https://paigeduffin.github.io/meadow_plot_tutorial
 # 
-# this template uses pixy, a valuable tool external to the tutorial: 
+# This template uses pixy, a valuable tool developed by Korunes & Samuk (2021).
 # Korunes, K. L. & Samuk, K. pixy: Unbiased estimation of nucleotide diversity 
 # and divergence in the presence of missing data. Mol. Ecol. Resour. 21, 
 # 1359–1368 (2021). https://doi.org/10.1111/1755-0998.13326
